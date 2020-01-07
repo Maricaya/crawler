@@ -1,0 +1,42 @@
+2020-01-07 20:23:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LINKS_TO_BE_PROCESSED" not found; SQL statement:
+select link from LINKS_TO_BE_PROCESSED LIMIT 1 [42102-199]
+2020-01-07 20:24:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LINKS_TO_BE_PROCESSED" not found; SQL statement:
+select link from LINKS_TO_BE_PROCESSED LIMIT 1 [42102-199]
+2020-01-07 20:24:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LINKS_TO_BE_PROCESSED" not found; SQL statement:
+insert into LINKS_TO_BE_PROCESSED (link) values ('https://sina.cn') [42102-200]
+2020-01-07 20:25:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE NEWS (ID BIGINT PRIMARY KEY AUTO_INCREMENT,
+TITLE TEXT,
+CONTENT TEXT,
+URL VARCHAR(1000),
+CREATED_AT TIMESTAMP DEFAULT NOW(),
+MODIFIED_AT TIMESTAMP DEFAULT NOW()
+) DEFAULT[*] CHARSET=UTF8MB4"; SQL statement:
+create table NEWS (id bigint primary key auto_increment,
+title text,
+content text,
+url varchar(1000),
+created_at timestamp default now(),
+modified_at timestamp default now()
+) DEFAULT CHARSET=utf8mb4 [42000-200]
+2020-01-07 20:25:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE NEWS (ID BIGINT PRIMARY KEY AUTO_INCREMENT,
+TITLE TEXT,
+CONTENT TEXT,
+URL VARCHAR(1000),
+CREATED_AT TIMESTAMP DEFAULT NOW(),
+MODIFIED_AT TIMESTAMP DEFAULT NOW()
+) DEFAULT[*] CHARSET=UTF8MB4"; SQL statement:
+create table NEWS (id bigint primary key auto_increment,
+title text,
+content text,
+url varchar(1000),
+created_at timestamp default now(),
+modified_at timestamp default now()
+) DEFAULT CHARSET=utf8mb4 [42000-200]
+2020-01-07 20:25:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "NEWS" not found; SQL statement:
+select * from news [42102-200]

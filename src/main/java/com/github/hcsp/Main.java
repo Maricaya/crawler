@@ -61,6 +61,8 @@ public class Main {
             }
 
             if (isInterestingLink(link)) {
+                System.out.println(link);
+
                 Document doc = httpGetAndParseHtml(link);
 
                 parseUrlsFromPageAndStoreIntoDatabase(connection, doc);
@@ -75,7 +77,13 @@ public class Main {
     private static void parseUrlsFromPageAndStoreIntoDatabase(Connection connection, Document doc) throws SQLException {
         for (Element aTag : doc.select("a")) {
             String href = aTag.attr("href");
-            System.out.println("href" + href);
+
+            if (href.startsWith("//")) {
+                href = "https:" + href;
+            }
+            if (href.toLowerCase().startsWith("javascript")) {
+                continue;
+            }
             updateDatabase(connection, href, "INSERT INTO LINKS_TO_BE_PROCESSED (link) values (?)");
         }
     }
@@ -118,16 +126,10 @@ public class Main {
         // 这是我们感兴趣的，我们只处理新浪站内的链接
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
-        if (link.startsWith("//")) {
-            link = "https:" + link;
-            System.out.println(link);
-        }
-
         HttpGet httpGet = new HttpGet(link);
         httpGet.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
 
         try (CloseableHttpResponse response1 = httpclient.execute(httpGet)) {
-            System.out.println(response1.getStatusLine());
             HttpEntity entity1 = response1.getEntity();
             String html = EntityUtils.toString(entity1);
             return Jsoup.parse(html);
