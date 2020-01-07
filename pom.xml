@@ -116,7 +116,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.0.4</version>
                 <configuration>
-                    <url>jdbc:h2:file:/Users/admin/IdeaProjects/crawler/news</url>
+                    <url>jdbc:h2:file:C:/Users/DELL/Desktop/crawler/news</url>
                     <user>root</user>
                     <password>root</password>
                 </configuration>

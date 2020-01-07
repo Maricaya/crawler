@@ -10,6 +10,7 @@ import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Main {
     private static final String USER_NAME = "root";
@@ -49,7 +51,8 @@ public class Main {
 
     @SuppressFBWarnings("DMI_CONSTANT_DB_PASSWORD")
     public static void main(String[] args) throws IOException, SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:h2:file:/Users/admin/IdeaProjects/crawler/news", USER_NAME, PASSWORD);
+
+        Connection connection = DriverManager.getConnection("jdbc:h2:file:C:/Users/DELL/Desktop/crawler/news", USER_NAME, PASSWORD);
 
         String link;
 
@@ -67,7 +70,7 @@ public class Main {
 
                 parseUrlsFromPageAndStoreIntoDatabase(connection, doc);
 
-                storeIntoDatabaseIfItIsNewsPage(doc);
+                storeIntoDatabaseIfItIsNewsPage( connection, doc, link);
 
                 updateDatabase(connection, link, "INSERT INTO LINKS_ALREADY_PROCESSED (link) values (?)");
             }
@@ -81,10 +84,9 @@ public class Main {
             if (href.startsWith("//")) {
                 href = "https:" + href;
             }
-            if (href.toLowerCase().startsWith("javascript")) {
-                continue;
+            if (!href.toLowerCase().startsWith("javascript")) {
+                updateDatabase(connection, href, "INSERT INTO LINKS_TO_BE_PROCESSED (link) values (?)");
             }
-            updateDatabase(connection, href, "INSERT INTO LINKS_TO_BE_PROCESSED (link) values (?)");
         }
     }
 
@@ -111,12 +113,20 @@ public class Main {
         }
     }
 
-    private static void storeIntoDatabaseIfItIsNewsPage(Document doc) {
+    private static void storeIntoDatabaseIfItIsNewsPage(Connection connection ,Document doc, String link) throws SQLException {
         ArrayList<Element> articleTags = doc.select("article");
         if (!articleTags.isEmpty()) {
             for (Element articleTag : articleTags) {
                 String title = articleTags.get(0).child(0).text();
                 System.out.println(title);
+                String content = articleTag.select("p").stream().map(Element::text).collect(Collectors.joining("\n"));
+
+                try(PreparedStatement statement = connection.prepareStatement("insert into news(url, title, content, created_at,modified_at) values ( ?,?,?,now(),now())")) {
+                    statement.setString(1, link);
+                    statement.setString(2, title);
+                    statement.setString(3, content);
+                    statement.executeUpdate();
+                }
             }
         }
     }
