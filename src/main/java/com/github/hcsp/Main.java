@@ -44,7 +44,6 @@ public class Main {
     public static void main(String[] args) throws IOException, SQLException {
         Connection connection = DriverManager.getConnection("jdbc:h2:file:/Users/admin/IdeaProjects/crawler/news", USER_NAME, PASSWORD);
         while (true) {
-            // 待处理的链接池
             // 从数据库加载即将处理的链接的代码
             List<String> linkPool = loadUrlsFromDatabase(connection, "select link from LINKS_TO_BE_PROCESSED");
 
