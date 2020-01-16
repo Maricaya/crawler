@@ -27,7 +27,7 @@ public class JdbcCrawlerDao implements CrawlerDao{
         return link;
     }
 
-    public String getNextLink(String sql) throws SQLException {
+    private String getNextLink(String sql) throws SQLException {
         ResultSet resultSet = null;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             resultSet = statement.executeQuery();
