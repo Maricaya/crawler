@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -9,7 +8,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="org.h2.Driver"/>
-                <property name="url" value="jdbc:h2:file:/Users/zhb/Projects/xiedaimala-crawler/news"/>
+                <property name="url" value="jdbc:h2:file:/Users/admin/IdeaProjects/crawler/news"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
