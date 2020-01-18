@@ -42,3 +42,16 @@ create table LINKS_TO_BE_PROCESSED (link varchar(1000)) DEFAULT CHARSET=utf8mb4;
 --ALTER DATABASE news CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 ```
 
+### 建立索引
+```mysql-psql
+-- 联合索引created_at + modified_at
+create index create_at_modified_at_index
+on NEWS(created_at,modified_at)
+
+-- 1s
+select * from NEWS where created_at='2019-01-01' and modified_at<'2019-02-01'
+-- 10s
+select * from NEWS where created_at>'2019-01-01' and modified_at='2019-02-01'
+```
+
+
