@@ -61,7 +61,6 @@ public class MyBatisCrawlerDao implements CrawlerDao{
 
     @Override
     public void insertLinkToBeProcessed(String link) {
-    //    insert into links_to_be_processed (link) values (#link)
         Map<String, Object> param = new HashMap<>();
         param.put("tableName", "links_to_be_processed");
         param.put("link", link);
@@ -69,5 +68,4 @@ public class MyBatisCrawlerDao implements CrawlerDao{
             session.insert("com.github.hcsp.MyMapper.insertLink", param);
         }
     }
-
 }

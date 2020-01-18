@@ -89,7 +89,7 @@ public class Crawler {
         }
     }
 
-    // 我们只关心news。sina的，我们要排除登陆页面
+    // 我们只关心news sina的，我们要排除登陆页面
     private static boolean isInterestingLink(String link) {
         return (isNewsPage(link) || isIndexPage(link)) && isNotLoginPage(link) && isNotKeywordPage(link);
     }
